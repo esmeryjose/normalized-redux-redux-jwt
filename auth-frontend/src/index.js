@@ -7,11 +7,11 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 // import './index.css';
 import App from "./App";
-import usersReducer from "./reducers/usersReducer";
+import dataReducer from "./reducers/dataReducer";
 import locationReducer from "./reducers/locationReducer";
 import registerServiceWorker from "./registerServiceWorker";
 
-const rootReducer = combineReducers({ usersReducer, locationReducer });
+const rootReducer = combineReducers({ dataReducer, locationReducer });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

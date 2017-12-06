@@ -1,10 +1,13 @@
 import React from "react";
 import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import Profile from "./components/Profile";
+import AddThings from "./components/AddThings";
+import UsersPage from "./components/UsersPage";
+import PostsPage from "./components/PostsPage";
 import LoginForm from "./components/LoginForm";
 import Navigation from "./components/Navigation";
 import { connect } from "react-redux";
-import { getCurrentUser, logOutUser, loginUser } from "./actions/user";
+import { getCurrentUser, logOutUser, setCurrentUser } from "./actions/data";
 import { getLocation } from "./actions/location";
 import authorize from "./authorize";
 
@@ -25,46 +28,28 @@ class App extends React.Component {
         <Switch>
           <Route
             exact
-            path="/"
-            render={() => (
-              <div>
-                {this.props.usersReducer.loading
-                  ? "Downloading Internet.."
-                  : this.props.usersReducer.username}
-              </div>
-            )}
+            path="/profile"
+            component={AuthProfile}
+            {...this.props}
           />
-          <Route exact path="/map" render={() => <div>Mapppppppp</div>} />
-          <Route exact path="/profile" component={AuthProfile} />
+          <Route exact path="/users" render={() => <UsersPage />} />
+          <Route exact path="/posts" render={() => <PostsPage />} />
+          <Route exact path="/addthings" render={() => <AddThings />} />
           <Route
             exact
             path="/login"
             render={props => <AuthLoginForm onSubmit={this.logIn} {...props} />}
           />
-          <Redirect to="/" />
+          <Redirect to="/profile" />
         </Switch>
-        {this.props.usersReducer.loading ? (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: "100vh",
-              width: "100vw",
-              backgroundColor: "#3E3"
-            }}
-          >
-            ...Fetching User...
-          </div>
-        ) : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ usersReducer, locationReducer }) => ({
-  usersReducer,
-  locationReducer
+const mapStateToProps = ({ dataReducer, locationReducer }) => ({
+  data: dataReducer,
+  location: locationReducer
 });
 
 export default withRouter(
@@ -72,7 +57,7 @@ export default withRouter(
     getCurrentUser,
     getLocation,
     logOutUser,
-    loginUser
+    setCurrentUser
   })(App)
 );
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { signInUser, signUpUser } from "../actions/user";
+import { signInUser, signUpUser } from "../actions/data";
 import { Form, Divider, Header, Container } from "semantic-ui-react";
 
 class LoginForm extends React.Component {
@@ -87,7 +87,7 @@ class LoginForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ...state.usersReducer
+    ...state.dataReducer
   };
 };
 
