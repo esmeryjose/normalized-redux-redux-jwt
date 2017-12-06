@@ -12,7 +12,7 @@ const Navigation = props => {
       </Menu.Item>
       <Menu.Item name="cards">
         {" "}
-        <Link to="/map">Store Map</Link>
+        <Link to="/addthings">Add Things</Link>
       </Menu.Item>
 
       {!!props.username ? (
@@ -36,7 +36,7 @@ const Navigation = props => {
 
 const mapStateToProps = state => {
   return {
-    ...state.usersReducer
+    ...state.dataReducer
   };
 };
 

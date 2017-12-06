@@ -9,7 +9,7 @@ const authorize = RenderedComponent => {
         localStorage.getItem("jwt") &&
         this.props.location.pathname === "/login"
       ) {
-        return <Redirect to="/" />;
+        return <Redirect to="/profile" />;
       } else if (
         !localStorage.getItem("jwt") &&
         this.props.location.pathname !== "/login"

@@ -2,41 +2,44 @@ const baseUrl = `http://localhost:3000/api/v1`;
 
 export class AuthAdapter {
   static login(body) {
-    return fetch(`${baseUrl}/login`, postRequest(body)).then(responseHandler);
+    return fetch(`${baseUrl}/login`, postRequest(body)).then(responseHandler());
   }
-
   static signUp(body) {
-    return fetch(`${baseUrl}/signup`, postRequest(body)).then(responseHandler);
+    return fetch(`${baseUrl}/signup`, postRequest(body)).then(
+      responseHandler()
+    );
   }
   static getUser() {
-    return fetch(`${baseUrl}/get-user`, getRequest()).then(responseHandler);
+    return fetch(`${baseUrl}/current-user`, getRequest()).then(
+      responseHandler()
+    );
   }
 }
 
 export class RestfulAdapter {
   static indexFetch(route = "users") {
-    return fetch(`${baseUrl}/${route}`, getRequest()).then(responseHandler);
+    return fetch(`${baseUrl}/${route}`, getRequest()).then(responseHandler());
   }
   static showFetch(route = "users", id) {
     return fetch(`${baseUrl}/${route}/${id}`, getRequest()).then(
-      responseHandler
+      responseHandler()
     );
   }
   static createFetch(route = "users", body) {
     return fetch(`${baseUrl}/${route}`, postRequest(body)).then(
-      responseHandler
+      responseHandler()
     );
   }
   static editFetch(route = "users", id, body) {
     return fetch(`${baseUrl}/${route}/${id}`, postRequest(body)).then(
-      responseHandler
+      responseHandler()
     );
   }
   static deleteFetch(route = "users", id) {
     return fetch(`${baseUrl}/${route}/${id}`, {
       method: "DELETE",
       headers: headers()
-    }).then(responseHandler);
+    }).then(responseHandler());
   }
 }
 

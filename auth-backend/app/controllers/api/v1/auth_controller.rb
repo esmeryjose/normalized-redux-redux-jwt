@@ -5,7 +5,10 @@ class Api::V1::AuthController < ApplicationController
     @user = User.find_by(username: user_login_params[:username])
     if @user && @user.authenticate(user_login_params[:password])
       token = encode_token({ user_id: @user.id })
-      render json: { username: @user.username, jwt: token }, status: 202
+      @posts = @user.posts
+      @comments = @user.comments
+      @users = [@user.slice(:username, :id, :created_at, :name, :img_url, :sm_img_url, :latitude, :longitude, :posts, :comments)]
+      render json: { username: @user.username, user_id: @user.id, users: @users, posts: @posts, comments: @comments, jwt: token }, status: 202
     else
       render json: { message: "Invalid username or password" }, status: 401
     end
@@ -13,8 +16,12 @@ class Api::V1::AuthController < ApplicationController
 
   def show
     if !!current_user #current_user comes from application controller; it finds current user by id found in decoded JWT token
-      token = encode_token({ user_id: current_user.id })
-      render json: { username: current_user.username, jwt: token }, status: 200
+      @user = current_user
+      token = encode_token({ user_id: @user.id })
+      @posts = @user.posts
+      @comments = @user.comments
+      @users = [@user.slice(:username, :id, :created_at, :name, :img_url, :sm_img_url, :latitude, :longitude, :posts, :comments)]
+      render json: { username: @user.username, user_id: @user.id, users: @users, posts: @posts, comments: @comments, jwt: token }, status: 202
     else
       render json: { message: "User not found" }, status: 404
     end
@@ -23,7 +30,7 @@ class Api::V1::AuthController < ApplicationController
   private
 
   def user_login_params
-    params.require(:user).permit(:username, :password)
+    params.require(:auth).permit(:username, :password)
   end
 
 end
