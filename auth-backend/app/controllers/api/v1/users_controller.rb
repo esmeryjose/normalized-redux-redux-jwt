@@ -3,10 +3,10 @@ class Api::V1::UsersController < ApplicationController
 
   def index
     @users = User.all.sample(20)
-    @posts = @users.map{|user| user.posts}.flatten
-    @comments = @users.map{|user| user.comments}.flatten
-    @users = @users.map {|user| user.slice(:username, :id, :created_at, :name, :img_url, :sm_img_url, :latitude, :longitude, :posts, :comments)}  
-    render json: {users: @users, posts: @posts, comments: @comments}, status: 200
+    # @posts = @users.map{|user| user.posts}.flatten
+    # @comments = @users.map{|user| user.comments}.flatten
+    # @users = @users.map {|user| user.slice(:username, :id, :created_at, :name, :img_url, :sm_img_url, :latitude, :longitude, :posts, :comments)}
+    render json: @users, include: [:posts, :comments] #{users: @users, posts: @posts, comments: @comments}, status: 200
   end
 
   def create

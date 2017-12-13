@@ -29,24 +29,10 @@ export default function dataReducer(
     case "SET_DATA":
       let normalizedData = dataNormalizr(action.payload);
       console.log(state, normalizedData);
+      debugger;
       return {
         ...state,
-        entities: {
-          users: { ...state.entities.users, ...normalizedData.entities.users },
-          posts: { ...state.entities.posts, ...normalizedData.entities.posts },
-          comments: {
-            ...state.entities.comments,
-            ...normalizedData.entities.comments
-          }
-        },
-        result: {
-          users: [...state.result.users, ...normalizedData.result.users],
-          comments: [
-            ...state.result.comments,
-            ...normalizedData.result.comments
-          ],
-          posts: [...state.result.posts, ...normalizedData.result.posts]
-        }
+        entities: normalizedData.entities
       };
     default:
       return state;

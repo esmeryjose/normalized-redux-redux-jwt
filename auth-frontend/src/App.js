@@ -7,15 +7,18 @@ import PostsPage from "./components/PostsPage";
 import LoginForm from "./components/LoginForm";
 import Navigation from "./components/Navigation";
 import { connect } from "react-redux";
-import { getCurrentUser, logOutUser, setCurrentUser } from "./actions/data";
+import {
+  getUserData,
+  getCurrentUser,
+  logOutUser,
+  setCurrentUser
+} from "./actions/data";
 import { getLocation } from "./actions/location";
 import authorize from "./authorize";
 
 class App extends React.Component {
   componentDidMount() {
-    if (localStorage.getItem("jwt")) {
-      this.props.getCurrentUser();
-    }
+    this.props.getUserData();
   }
 
   render() {
@@ -57,6 +60,7 @@ export default withRouter(
     getCurrentUser,
     getLocation,
     logOutUser,
+    getUserData,
     setCurrentUser
   })(App)
 );

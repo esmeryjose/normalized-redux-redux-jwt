@@ -89,8 +89,6 @@ export function addComment(body) {
 }
 
 export function setData(data) {
-  debugger;
-
   return {
     type: "SET_DATA",
     payload: data
