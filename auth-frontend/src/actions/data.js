@@ -4,6 +4,7 @@ export function signInUser(username, password) {
   return dispatch => {
     dispatch(loadingUser());
     AuthAdapter.login({ username, password }).then(userData => {
+      localStorage.setItem("jwt", userData.jwt);
       dispatch(setCurrentUser(userData));
       dispatch(setData(userData));
     });
@@ -14,6 +15,7 @@ export function signUpUser(username, password) {
   return dispatch => {
     dispatch(loadingUser());
     AuthAdapter.signUp({ username, password }).then(userData => {
+      localStorage.setItem("jwt", userData.jwt);
       dispatch(setCurrentUser(userData));
       dispatch(setData(userData));
     });
@@ -25,6 +27,7 @@ export function getCurrentUser() {
   return dispatch => {
     dispatch(loadingUser());
     AuthAdapter.getUser().then(userData => {
+      localStorage.setItem("jwt", userData.jwt);
       dispatch(setCurrentUser(userData));
       dispatch(setData(userData));
     });
@@ -39,6 +42,7 @@ export function setCurrentUser(userData) {
 }
 
 export function logOutUser() {
+  localStorage.removeItem("jwt");
   return {
     type: "LOG_OUT_USER"
   };
@@ -85,6 +89,8 @@ export function addComment(body) {
 }
 
 export function setData(data) {
+  debugger;
+
   return {
     type: "SET_DATA",
     payload: data

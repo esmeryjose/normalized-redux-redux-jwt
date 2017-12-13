@@ -15,7 +15,6 @@ export default function dataReducer(
     case "LOADING_USER":
       return { ...state, loading: true };
     case "LOGIN_USER":
-      localStorage.setItem("jwt", action.payload.jwt);
       return {
         ...state,
         username: action.payload.username,
@@ -24,7 +23,6 @@ export default function dataReducer(
         loading: false
       };
     case "LOG_OUT_USER":
-      localStorage.removeItem("jwt");
       return { ...state, username: null, loggedIn: false };
 
     //accepts user, post, comment endpoints
